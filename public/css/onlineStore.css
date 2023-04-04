@@ -58,3 +58,7 @@ input[type="number"] {
     width: 100% !important;
     margin-left : -0.1em !important;
 }
+.already-exists-error {
+    margin-left: 2em;
+    color:red;
+}

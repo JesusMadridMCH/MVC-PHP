@@ -1,17 +1,13 @@
 $(document).ready(function(){
-    // addProduct();
     getProducts();
-    // showContainerType(3);
-
     $("#addProductButton").on('click', (e) => {
         e.preventDefault();
         const skuCode=$("#skuCode").val();
         const name=$("#name").val();
         const price=$("#price").val();
-        const typeName=$("#productType").val();
+        const typeName=$("#productType").find(":selected").val();
         let checkGenerateFields;
         let productType='';
-        let productProperty='';
         let singleMeasurement = [];
 
         $("#skuCode").css("border", `solid 1px ${checkColorInput("skuCode")}`);
@@ -19,7 +15,7 @@ $(document).ready(function(){
         $("#price").css("border", `solid 1px ${checkColorInput("price")}`);
         $("#productType").css("border", `solid 1px ${checkColorSelect("productType")}`);
 
-        if($.trim(typeName)!==""){
+        if($.trim(typeName)!=="" && typeName!==undefined){
             checkGenerateFields = generateComponents()[typeName];
             console.log(checkGenerateFields)
             productType=checkGenerateFields.type;
@@ -27,26 +23,23 @@ $(document).ready(function(){
             const fields = Object.keys(checkGenerateFields.components)
             fields.forEach((field) => {
                 let fieldName = field.toLowerCase();
-                $(`${fieldName}`).css("border", `solid 1px ${checkColorInput(`${fieldName}`)}`);
-                console.log(fieldName)
+                $(`#${fieldName}`).css("border", `solid 1px ${checkColorInput(`${fieldName}`)}`);
                 singleMeasurement.push($(`#${fieldName}`).val());
             })
             singleMeasurement=singleMeasurement.join("X")
         }
-        if(checkFields()){
-           e.preventDefault();
-        }
-        else {
+        highlightFields();
+        if($.trim(skuCode)!=="" && $.trim(name)!=="" && $.trim(price)!=="" && $.trim(typeName)!=="" && $.trim(productType)!=="" && $.trim(singleMeasurement)!=="")
+        {
             const product = {};
             product["productType"]=typeName;
             product["skuCode"]=skuCode;
             product["name"]=name;
+            product["price"]=price;
             product["type"]=productType;
             product[checkGenerateFields.property]=singleMeasurement;
 
-            console.log(product)
             addProduct(product)
-            // debugger;
         }
     })
 
@@ -60,18 +53,16 @@ $(document).ready(function(){
                 productsToBeDeleted.push(realId)
             });
             bodyRequestDeleteProducts=productsToBeDeleted.join("/")
-            console.log(bodyRequestDeleteProducts)
+            // console.log(bodyRequestDeleteProducts)
             deleteProducts(bodyRequestDeleteProducts)
         }
     })
     $("#addProduct").on('click', () => {
         document.location.href="/addProduct";
     })
-
     $("#backToProductList").on('click', () => {
         document.location.href="/";
     })
-
     $("#productType").on('change', () => {
         if($.trim($(this).find(":selected").val())!==""){
             showContainerType($(this).find(":selected").val());
@@ -80,10 +71,9 @@ $(document).ready(function(){
         }
     })
 });
-const checkFields = () => {
+const highlightFields = () => {
     let borderColorsFields = [];
-
-    $('#addProductSubmit :input').toArray().forEach((el) => borderColorsFields.push($(el).css("border-color")) )
+    $(":input").toArray().forEach((el) => borderColorsFields.push($(el).css("border-color")) )
     return $.inArray("rgb(255, 0, 0)" , borderColorsFields) !== -1
 }
 const showContainerType = (type) => {
@@ -119,8 +109,6 @@ const productTypes = () =>
         "3": "DvdDisk",
     }
 }
-
-
 const generateFields = (product) => {
     let components=product.components
     let fields = Object.keys(components)
@@ -138,8 +126,8 @@ const generateFields = (product) => {
     cleanContainerTypeSection();
     return $(element).appendTo("#productTypeSection")
 }
-
 const cleanContainerTypeSection = () =>   $("#productTypeSection").html("");
+const setErorrMessageContainer = ({field: idField, message: textMessage}) =>   $(`${idField}`).html(`${textMessage}`);
 const editContainer = (element) => {
     const properties = Object.keys(element);
     const propertyShow=properties[1];
@@ -160,20 +148,21 @@ const editContainer = (element) => {
         
 </div>`).appendTo("#containerType");
 }
-
-const checkColorInput = (field) => $.trim($(`#${field}`).val())=="" || $.trim($(`#${field}`).val())=="0.00"? "red" : "#cccccc";
+const checkColorInput = (field) => $.trim($(`#${field}`).val())==""? "red" : "#cccccc";
 const checkColorSelect = (field) => $.trim($(`#${field}`).find(":selected").val())==""? "red" : "#cccccc";
 
+/** Endpoints */
 const addProduct = (product) => {
     $.post("http://localhost/addproduct",
         product ,
         (data, status) => {
-          // console.log(data)
             if(Object.keys(data).length) {
                 let response= JSON.parse(data)
-                if(!response.success)
-                    console.log(response.message)
-                else
+                setErorrMessageContainer({
+                    field:"#alreadyExistsError",
+                    message:!response.success? response.message : ""
+                })
+                if(response.success)
                     setTimeout(() => window.location ="/", 3000)
             }
         })
@@ -184,7 +173,6 @@ const getProducts = () => {
         url:'http://localhost/products',
         contentType:'application/json',
         success: (data) => {
-            // console.log(data)
             if(Object.keys(data).length){
                 let response= JSON.parse(data)
                 response.forEach(element => {

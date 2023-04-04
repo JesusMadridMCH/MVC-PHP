@@ -6,9 +6,8 @@
 <form id="addProductSubmit" >
     <div class="container">
         <div class="form-group">
-            <label>SkuCode</label>
+            <label>SkuCode</label><label class="already-exists-error" id="alreadyExistsError"></label>
             <input type="text" id="skuCode" value="" class="form-control" required>
-            <!--    <div class="invalid-feedback"></div>-->
         </div>
         <div class="form-group">
             <label>Name</label>

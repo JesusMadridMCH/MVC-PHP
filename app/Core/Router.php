@@ -33,7 +33,7 @@ class Router
         $method=$this->request->getMethod();
         $callback=$this->routes[$method][$path] ?? false;
         if($callback === false){
-//            throw new NotFoundException();
+            throw new NotFoundException();
             exit;
         }
         if(is_string($callback))

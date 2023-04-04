@@ -3,7 +3,7 @@
 ini_set('display_errors','on');
 error_reporting(E_ALL & ~E_DEPRECATED);
 
-use App\Controller\AuthController;
+use App\Controller\AuthControllers;
 use App\Controller\ProductController;
 use App\Core\Application;
 use App\Controller\SiteController;
@@ -29,10 +29,7 @@ $app->router->post("/addproduct", [ProductController::class, 'addProduct']);
 $app->router->get("/products", [ProductController::class, 'getProducts']);
 $app->router->get("/deleteproduct", [ProductController::class, 'deleteProduct']);
 
-
 $app->router->get("/", [SiteController::class, 'productList']);
 $app->router->get("/addProduct", [SiteController::class, 'addProduct']);
-$app->router->get("/contact", [SiteController::class, 'contact']);
-$app->router->post("/contact", [SiteController::class, "handleContact"]);
 
 $app->run();
