@@ -56,7 +56,6 @@ $(document).ready(function(){
                 productsToBeDeleted.push(realId)
             });
             bodyRequestDeleteProducts=productsToBeDeleted.join("/")
-            // console.log(bodyRequestDeleteProducts)
             deleteProducts(bodyRequestDeleteProducts)
         }
     })
@@ -74,7 +73,6 @@ $(document).ready(function(){
         }
     })
 });
-
 const callGetProduct = () => {
     let baseUrl=window. location. href.split("/")
     baseUrl = baseUrl.filter((el) =>  $.trim(el) !=="")
@@ -187,8 +185,6 @@ const getProducts = () => {
                 response.forEach(element => {
                     editContainer(element)
                 })
-            } else {
-                console.log("no data found");
             }
         }, error:(error)=>  console.log(error)
     })
@@ -199,17 +195,10 @@ const deleteProducts = (bodyRequestDeleteProducts) => {
         url:'http://localhost/deleteproduct/'+bodyRequestDeleteProducts,
         contentType:'application/json',
         success: (data) => {
-            console.log(data)
             if(Object.keys(data).length){
-                if(Object.keys(data).length){
-                    let response= JSON.parse(data)
-                    if(response.success)
-                        setTimeout(() => location.reload(), 3000)
-                } else {
-                    console.log("no data found");
-                }
-            } else {
-                console.log("no data found");
+                let response= JSON.parse(data)
+                if(response.success)
+                    setTimeout(() => location.reload(), 3000)
             }
         }, error:(error)=>  console.log(error)
     })

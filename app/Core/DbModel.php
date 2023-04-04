@@ -74,7 +74,8 @@ abstract class DbModel extends Model
 
     public static function deleteByColumn($schemaName,$tableName,$data = [])
     {
-        $statement=self::prepare("DELETE FROM $schemaName.$tableName WHERE {$data['column']}={$data['value']}");
+        $statement=self::prepare("DELETE FROM $schemaName.$tableName WHERE {$data['column']}=:{$data['column']}");
+        $statement->bindValue(":{$data['column']}", $data['value']);
         try {
             return $statement->execute();
         } catch (\Exception $exception){
