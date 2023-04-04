@@ -1,5 +1,8 @@
 $(document).ready(function(){
-    getProducts();
+
+    if(callGetProduct())
+        getProducts();
+
     $("#addProductButton").on('click', (e) => {
         e.preventDefault();
         const skuCode=$("#skuCode").val();
@@ -71,6 +74,12 @@ $(document).ready(function(){
         }
     })
 });
+
+const callGetProduct = () => {
+    let baseUrl=window. location. href.split("/")
+    baseUrl = baseUrl.filter((el) =>  $.trim(el) !=="")
+    return baseUrl.length==2
+}
 const highlightFields = () => {
     let borderColorsFields = [];
     $(":input").toArray().forEach((el) => borderColorsFields.push($(el).css("border-color")) )
