@@ -8,7 +8,8 @@ class  m0002_add_productType {
         $SQL="CREATE TABLE IF NOT EXISTS $dbName.productType (
         id INT AUTO_INCREMENT PRIMARY KEY,
         measurement_type VARCHAR(255) NOT NULL,
-        skuCode_fk VARCHAR(255)  NOT NULL,
+        skuCode VARCHAR(255)  NOT NULL,
+        type INT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);

@@ -68,7 +68,7 @@ $(document).ready(function(){
         }
     })
 });
-const baseUrlDomain = () => "http://localhost/"
+const baseUrlDomain = () => "https://onlineseniorstore.000webhostapp.com/"
 
 const checkColorInput = (field) => $.trim($(`#${field}`).val())==""? "red" : "#cccccc";
 const checkColorSelect = (field) => $.trim($(`#${field}`).find(":selected").val())==""? "red" : "#cccccc";
@@ -182,7 +182,7 @@ const getProducts = () => {
         url:baseUrl+'products',
         contentType:'application/json',
         success: (data) => {
-            if(Object.keys(data).length){
+            if(Object.keys(data).length>0){
                 let response= JSON.parse(data)
                 response.forEach(element => {
                     editContainer(element)

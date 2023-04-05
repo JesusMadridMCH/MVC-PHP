@@ -10,7 +10,6 @@ class m0001_addProduct {
         skuCode VARCHAR(255)  PRIMARY KEY NOT NULL,
         name VARCHAR(255) NOT NULL,
         price DECIMAL(20,2) NOT NULL,
-        type INT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=INNODB;";
     $db->pdo->exec($SQL);

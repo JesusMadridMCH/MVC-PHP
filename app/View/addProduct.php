@@ -1,6 +1,6 @@
 
 <div style="margin-bottom: 3em;">
-    <button type="button" id="backToProductList" class="btn btn-danger">Cancel</button>
+    <button type="button" id="backToProductList" class="btn btn-danger btn-lg">Cancel</button>
 </div>
 <div class="title-section"><h1>Add Product</h1></div>
 <form id="addProductSubmit" >
@@ -30,7 +30,7 @@
         </div>
         <div class="product-type-section" id="productTypeSection"></div>
         <div style="color:darkred" class="mt-3" id="submitErrorContainer"></div>
-        <button  style="margin-top: 3em" type="submit" id="addProductButton" class="btn btn-success">Add Product</button>
+        <button  style="margin-top: 3em" type="submit" id="addProductButton" class="btn btn-success btn-lg">Add Product</button>
     </div>
 </form>
 
