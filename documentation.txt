@@ -1,3 +1,2 @@
 Used phpdotenv package from composer
-
 composer require vlucas/phpdotenv

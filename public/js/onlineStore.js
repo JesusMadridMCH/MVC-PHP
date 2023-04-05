@@ -25,7 +25,7 @@ $(document).ready(function(){
         let singleMeasurement = [];
         let fieldName = '';
 
-        $("#sku").css("border", `solid 1px ${checkColorInput("skuCode")}`);
+        $("#sku").css("border", `solid 1px ${checkColorInput("sku")}`);
         $("#name").css("border", `solid 1px ${checkColorInput("name")}`);
         $("#price").css("border", `solid 1px ${checkColorInput("price")}`);
         $("#productType").css("border", `solid 1px ${checkColorSelect("productType")}`);
