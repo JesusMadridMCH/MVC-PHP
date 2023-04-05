@@ -4,6 +4,7 @@ $(document).ready(function(){
         getProducts();
 
     $("#addProductButton").on('click', (e) => {
+        e.preventDefault();
         const skuCode=$("#skuCode").val();
         const name=$("#name").val();
         const price=$("#price").val();
@@ -39,11 +40,9 @@ $(document).ready(function(){
             product["type"]=productType;
             product[checkGenerateFields.property]=singleMeasurement;
 
-            addProduct(product)
-            return;
-        }
-        highlightFields(true);
-        e.preventDefault();
+            addProduct(product);
+        } else
+            highlightFields(true);
     })
     $("#massiveDelete").on('click', () => {
         const optionSelected = $("#selectMassiveDelete").find(":selected").val()
@@ -173,7 +172,7 @@ const addProduct = (product) => {
                     message:!response.success? response.message : ""
                 })
                 if(response.success)
-                    setTimeout(() => window.location ="/", 3000)
+                    setTimeout(() => window.location ="/", 1500)
             }
         })
 }
