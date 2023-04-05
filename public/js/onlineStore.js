@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
     if(callGetProduct())
         getProducts();
@@ -69,6 +68,8 @@ $(document).ready(function(){
         }
     })
 });
+const baseUrlDomain = () => "http://localhost/"
+
 const checkColorInput = (field) => $.trim($(`#${field}`).val())==""? "red" : "#cccccc";
 const checkColorSelect = (field) => $.trim($(`#${field}`).find(":selected").val())==""? "red" : "#cccccc";
 const callGetProduct = () => {
@@ -159,7 +160,8 @@ const editContainer = (element) => {
 }
 /** Endpoints */
 const addProduct = (product) => {
-    $.post("http://localhost/addproduct",
+    const baseUrl = baseUrlDomain();
+    $.post(baseUrl+"addproduct",
         product ,
         (data, status) => {
             if(Object.keys(data).length) {
@@ -174,9 +176,10 @@ const addProduct = (product) => {
         })
 }
 const getProducts = () => {
+    const baseUrl=baseUrlDomain();
     $.ajax({
         Type:'GET',
-        url:'http://localhost/products',
+        url:baseUrl+'products',
         contentType:'application/json',
         success: (data) => {
             if(Object.keys(data).length){
@@ -189,9 +192,10 @@ const getProducts = () => {
     })
 }
 const deleteProducts = (bodyRequestDeleteProducts) => {
+    const baseUrl=baseUrlDomain();
     $.ajax({
         Type:'GET',
-        url:'http://localhost/deleteproduct/'+bodyRequestDeleteProducts,
+        url:baseUrl+'deleteproduct/'+bodyRequestDeleteProducts,
         contentType:'application/json',
         success: (data) => {
             if(Object.keys(data).length){
