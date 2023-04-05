@@ -28,8 +28,8 @@
                 <option value="DvdDisk">DvdDisk</option>
             </select>
         </div>
-        <div class="product-type-section" id="productTypeSection">
-        </div>
+        <div class="product-type-section" id="productTypeSection"></div>
+        <div style="color:darkred" class="mt-3" id="submitErrorContainer"></div>
         <button  style="margin-top: 3em" type="submit" id="addProductButton" class="btn btn-success">Add Product</button>
     </div>
 </form>

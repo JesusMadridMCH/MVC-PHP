@@ -1,10 +1,9 @@
-$(document).ready(function(){
 
+$(document).ready(function(){
     if(callGetProduct())
         getProducts();
 
     $("#addProductButton").on('click', (e) => {
-        e.preventDefault();
         const skuCode=$("#skuCode").val();
         const name=$("#name").val();
         const price=$("#price").val();
@@ -20,7 +19,6 @@ $(document).ready(function(){
 
         if($.trim(typeName)!=="" && typeName!==undefined){
             checkGenerateFields = generateComponents()[typeName];
-            console.log(checkGenerateFields)
             productType=checkGenerateFields.type;
 
             const fields = Object.keys(checkGenerateFields.components)
@@ -31,7 +29,6 @@ $(document).ready(function(){
             })
             singleMeasurement=singleMeasurement.join("X")
         }
-        highlightFields();
         if($.trim(skuCode)!=="" && $.trim(name)!=="" && $.trim(price)!=="" && $.trim(typeName)!=="" && $.trim(productType)!=="" && $.trim(singleMeasurement)!=="")
         {
             const product = {};
@@ -43,9 +40,11 @@ $(document).ready(function(){
             product[checkGenerateFields.property]=singleMeasurement;
 
             addProduct(product)
+            return;
         }
+        highlightFields(true);
+        e.preventDefault();
     })
-
     $("#massiveDelete").on('click', () => {
         const optionSelected = $("#selectMassiveDelete").find(":selected").val()
         const productsToBeDeleted = []
@@ -78,10 +77,14 @@ const callGetProduct = () => {
     baseUrl = baseUrl.filter((el) =>  $.trim(el) !=="")
     return baseUrl.length==2
 }
-const highlightFields = () => {
-    let borderColorsFields = [];
+const highlightFields = (show) => {
+    const borderColorsFields = [];
+    const submitErrorMessage="Please, provide the data of highlighted fields";
     $(":input").toArray().forEach((el) => borderColorsFields.push($(el).css("border-color")) )
-    return $.inArray("rgb(255, 0, 0)" , borderColorsFields) !== -1
+    setErrorMessageContainer({
+        field: "#submitErrorContainer",
+        message:  $.inArray("rgb(255, 0, 0)" , borderColorsFields) !== -1 || show? submitErrorMessage : ""
+    })
 }
 const showContainerType = (type) => {
     const container=generateComponents();
@@ -134,7 +137,7 @@ const generateFields = (product) => {
     return $(element).appendTo("#productTypeSection")
 }
 const cleanContainerTypeSection = () =>   $("#productTypeSection").html("");
-const setErorrMessageContainer = ({field: idField, message: textMessage}) =>   $(`${idField}`).html(`${textMessage}`);
+const setErrorMessageContainer = ({field: idField, message: textMessage}) =>   $(`${idField}`).html(`${textMessage}`);
 const editContainer = (element) => {
     const properties = Object.keys(element);
     const propertyShow=properties[1];
@@ -165,7 +168,7 @@ const addProduct = (product) => {
         (data, status) => {
             if(Object.keys(data).length) {
                 let response= JSON.parse(data)
-                setErorrMessageContainer({
+                setErrorMessageContainer({
                     field:"#alreadyExistsError",
                     message:!response.success? response.message : ""
                 })
