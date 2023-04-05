@@ -3,6 +3,18 @@ $(document).ready(function(){
     if(callGetProduct())
         getProducts();
 
+    $("#addProduct").on('click', () =>
+        document.location.href="/addProduct"
+    )
+    $("#backToProductList").on('click', () =>
+        document.location.href="/"
+    )
+    $("#productType").on('change', () => {
+        if($.trim($(this).find(":selected").val())!==""){
+            showContainerType($(this).find(":selected").val());
+        } else
+            cleanContainerTypeSection();
+    })
     $("#addProductButton").on('click', (e) => {
         e.preventDefault();
         const skuCode=$("#skuCode").val();
@@ -12,6 +24,7 @@ $(document).ready(function(){
         let checkGenerateFields;
         let productType='';
         let singleMeasurement = [];
+        let fieldName = '';
 
         $("#skuCode").css("border", `solid 1px ${checkColorInput("skuCode")}`);
         $("#name").css("border", `solid 1px ${checkColorInput("name")}`);
@@ -24,13 +37,12 @@ $(document).ready(function(){
 
             const fields = Object.keys(checkGenerateFields.components)
             fields.forEach((field) => {
-                let fieldName = field.toLowerCase();
+                fieldName = field.toLowerCase();
                 $(`#${fieldName}`).css("border", `solid 1px ${checkColorInput(`${fieldName}`)}`);
                 singleMeasurement.push($(`#${fieldName}`).val());
             })
-            singleMeasurement=singleMeasurement.join("X")
-        }
-        if($.trim(skuCode)!=="" && $.trim(name)!=="" && $.trim(price)!=="" && $.trim(typeName)!=="" && $.trim(productType)!=="" && $.trim(singleMeasurement)!=="")
+       }
+        if($.trim(skuCode)!=="" && $.trim(name)!=="" && $.trim(price)!=="" && $.trim(typeName)!=="" && $.trim(productType)!=="" && !singleMeasurement.some((el) => $.trim(el)===""))
         {
             const product = {};
             product["productType"]=typeName;
@@ -38,39 +50,27 @@ $(document).ready(function(){
             product["name"]=name;
             product["price"]=price;
             product["type"]=productType;
-            product[checkGenerateFields.property]=singleMeasurement;
+            product[checkGenerateFields.property]=singleMeasurement.join("x");
 
             addProduct(product);
         } else
             highlightFields(true);
     })
+
     $("#massiveDelete").on('click', () => {
         const optionSelected = $("#selectMassiveDelete").find(":selected").val()
         const productsToBeDeleted = []
         if(optionSelected==1){
             $('#containerType input:checked').each(function() {
-                let joinedId = $(this).attr('id').split("product_");
-                let realId=joinedId[1];
-                productsToBeDeleted.push(realId)
+                const realId  = $(this).attr('id').split("product_");
+                productsToBeDeleted.push(realId[1])
             });
-            bodyRequestDeleteProducts=productsToBeDeleted.join("/")
-            deleteProducts(bodyRequestDeleteProducts)
-        }
-    })
-    $("#addProduct").on('click', () => {
-        document.location.href="/addProduct";
-    })
-    $("#backToProductList").on('click', () => {
-        document.location.href="/";
-    })
-    $("#productType").on('change', () => {
-        if($.trim($(this).find(":selected").val())!==""){
-            showContainerType($(this).find(":selected").val());
-        } else {
-            cleanContainerTypeSection();
+            deleteProducts(productsToBeDeleted.join("/"))
         }
     })
 });
+const checkColorInput = (field) => $.trim($(`#${field}`).val())==""? "red" : "#cccccc";
+const checkColorSelect = (field) => $.trim($(`#${field}`).find(":selected").val())==""? "red" : "#cccccc";
 const callGetProduct = () => {
     let baseUrl=window. location. href.split("/")
     baseUrl = baseUrl.filter((el) =>  $.trim(el) !=="")
@@ -150,16 +150,13 @@ const editContainer = (element) => {
         </div>
         <div class="infoContent">
             <h1>${element.skuCode}</h1>
-            <p>${element.name}</p>
-            <p>${element.price} </p>
+            <h6>${element.name}</h6>
+            <h6>${element.price} $</h6>
             <h5>${titleProperty}: ${element[propertyShow]} ${complement}</h5>
         </div>
         
 </div>`).appendTo("#containerType");
 }
-const checkColorInput = (field) => $.trim($(`#${field}`).val())==""? "red" : "#cccccc";
-const checkColorSelect = (field) => $.trim($(`#${field}`).find(":selected").val())==""? "red" : "#cccccc";
-
 /** Endpoints */
 const addProduct = (product) => {
     $.post("http://localhost/addproduct",
@@ -200,7 +197,7 @@ const deleteProducts = (bodyRequestDeleteProducts) => {
             if(Object.keys(data).length){
                 let response= JSON.parse(data)
                 if(response.success)
-                    setTimeout(() => location.reload(), 3000)
+                    setTimeout(() => location.reload(), 1500)
             }
         }, error:(error)=>  console.log(error)
     })
