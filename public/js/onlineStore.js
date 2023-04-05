@@ -127,7 +127,7 @@ const generateFields = (product) => {
         let title = field+" "+complementText
         element+=`
         <div class="form-group">
-            <label>${title}</label>
+            <label class="h6">${title}</label>
             <input type="${components[field]}" id="${field.toLowerCase()}" value="" class="form-control" required>
         </div>`;
     })

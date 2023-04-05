@@ -2,25 +2,25 @@
 <div style="margin-bottom: 3em;">
     <button type="button" id="backToProductList" class="btn btn-danger">Cancel</button>
 </div>
-<h1>Add Product</h1>
+<div class="title-section"><h1>Add Product</h1></div>
 <form id="addProductSubmit" >
     <div class="container">
         <div class="form-group">
-            <label>SkuCode</label><label class="already-exists-error" id="alreadyExistsError"></label>
+            <label class="h6">SkuCode</label><label class="already-exists-error" id="alreadyExistsError"></label>
             <input type="text" id="skuCode" value="" class="form-control" required>
         </div>
         <div class="form-group">
-            <label>Name</label>
+            <label class="h6">Name</label>
             <input type="text" id="name" value="" class="form-control" required>
             <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-            <label>$ Price</label>
+            <label class="h6">$ Price</label>
             <input type="number" id="price" value="" class="form-control">
             <div class="invalid-feedback"></div>
         </div>
         <div class="select-product-type">
-            <label>Product Type</label>
+            <label class="h6">Product Type</label>
             <select class="form-select" id="productType" aria-label="Default select example">
                 <option value="">Choose..</option>
                 <option value="Book">Book</option>
