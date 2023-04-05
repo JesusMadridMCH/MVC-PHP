@@ -15,7 +15,7 @@
                     <option value="1">Massive Delete</option>
                 </select>
                 <li class="nav-item">
-                    <button type="button" class="btn btn-dark ml-10 btn-lg" id="massiveDelete">Apply</button>
+                    <button type="button" class="btn btn-dark btn-lg" id="massiveDelete">Apply</button>
                 </li>
             </ul>
         </div>

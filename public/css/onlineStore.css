@@ -44,7 +44,7 @@ input[type="number"] {
     border: 1px dimgrey solid !important;
 }
 .nav-item {
-    margin-left: 1.5em !important;
+    margin: 0.4em !important;
 }
 
 .add-product {
