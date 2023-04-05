@@ -3,11 +3,11 @@
     <button type="button" id="backToProductList" class="btn btn-danger btn-lg">Cancel</button>
 </div>
 <div class="title-section"><h1>Add Product</h1></div>
-<form id="addProductSubmit" >
+<form id="product_form" >
     <div class="container">
         <div class="form-group">
             <label class="h6">SkuCode</label><label class="already-exists-error" id="alreadyExistsError"></label>
-            <input type="text" id="skuCode" value="" class="form-control" required>
+            <input type="text" id="sku" value="" class="form-control" required>
         </div>
         <div class="form-group">
             <label class="h6">Name</label>
@@ -25,12 +25,12 @@
                 <option value="">Choose..</option>
                 <option value="Book">Book</option>
                 <option value="Furniture">Furniture</option>
-                <option value="DvdDisk">DvdDisk</option>
+                <option value="DvdDisk">DVD</option>
             </select>
         </div>
         <div class="product-type-section" id="productTypeSection"></div>
         <div style="color:darkred" class="mt-3" id="submitErrorContainer"></div>
-        <button  style="margin-top: 3em" type="submit" id="addProductButton" class="btn btn-success btn-lg">Add Product</button>
+        <button  style="margin-top: 3em" type="submit" id="addProductButton" class="btn btn-success btn-lg">Save</button>
     </div>
 </form>
 

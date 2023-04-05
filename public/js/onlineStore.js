@@ -16,7 +16,7 @@ $(document).ready(function(){
     })
     $("#addProductButton").on('click', (e) => {
         e.preventDefault();
-        const skuCode=$("#skuCode").val();
+        const skuCode=$("#sku").val();
         const name=$("#name").val();
         const price=$("#price").val();
         const typeName=$("#productType").find(":selected").val();
@@ -25,7 +25,7 @@ $(document).ready(function(){
         let singleMeasurement = [];
         let fieldName = '';
 
-        $("#skuCode").css("border", `solid 1px ${checkColorInput("skuCode")}`);
+        $("#sku").css("border", `solid 1px ${checkColorInput("skuCode")}`);
         $("#name").css("border", `solid 1px ${checkColorInput("name")}`);
         $("#price").css("border", `solid 1px ${checkColorInput("price")}`);
         $("#productType").css("border", `solid 1px ${checkColorSelect("productType")}`);
@@ -147,7 +147,7 @@ const editContainer = (element) => {
 
     $(`<div class="square-img-container">
         <div class="form-check float-left">
-          <input class="form-check-input" type="checkbox" value="" id="product_${element.skuCode}">
+          <input class="form-check-input delete-checkbox" type="checkbox" value="" id="product_${element.skuCode}">
         </div>
         <div class="infoContent">
             <h1>${element.skuCode}</h1>

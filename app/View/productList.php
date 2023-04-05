@@ -4,7 +4,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0"> <h1>Product List</h1></ul>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <button type="button" class="btn btn-success btn-lg" id="addProduct">Add Product</button>
+                <button type="button" class="btn btn-success btn-lg" id="addProduct">ADD</button>
             </ul>
             <div class="input-group-prepend">
                 <label class="input-group-text" for="labelMassiveDelete">Options</label>
@@ -15,7 +15,7 @@
                     <option value="1">Massive Delete</option>
                 </select>
                 <li class="nav-item">
-                    <button type="button" class="btn btn-dark btn-lg" id="massiveDelete">Apply</button>
+                    <button type="button" class="btn btn-dark btn-lg" id="massiveDelete">MASS DELETE</button>
                 </li>
             </ul>
         </div>
